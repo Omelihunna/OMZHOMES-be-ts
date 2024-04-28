@@ -1,0 +1,57 @@
+<% layout("layouts/boilerplate") %>
+    <div class="row">
+        <h1 class="text-center">New home</h1>
+        <div class="col-md-6  offset-md-3">
+            <form class="validated-form" novalidate action="/homes/<%= home._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="home[title]" value="<%= home.title %>" required>
+                    <div class="valid-feedback">
+                        Sharp!!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="home[location]" value="<%= home.location %>" required>
+                    <div class="valid-feedback">
+                        Sharp!!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label custom-file-label">Add Images</label>
+                    <input class="form-control" type="file" id="image" name="image" multiple>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">home Price</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="Price" aria-describedby="price-label" name="home[price]" value="<%= home.price %>" required>
+                        <div class="valid-feedback">
+                            Sharp!!
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="home[description]"><%= home.description %></textarea>
+                    <div class="valid-feedback">
+                        Sharp!!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <% home.images.forEach(function (img, i) { %>
+                        <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" name="dleteImages[]" value="<%= img.filename %>" id="img-<%= i %>">
+                        </div>
+                        <label for="img-<%= i %>">Delete</label>
+                    <% }) %>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-info">Update home</button>
+                </div>
+            </form>
+            <a href="/homes">All homes</a>
+        </div>
+    </div>
+    

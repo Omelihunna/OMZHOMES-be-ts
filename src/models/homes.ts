@@ -23,7 +23,7 @@ interface Geometry {
     coordinates: number[]
 }
 
-interface Home {
+export interface IHome {
     title: string;
     images: Image[];
     geometry: Geometry;
@@ -43,7 +43,7 @@ export const ImageSchema = new Schema <Image> (
     }
 );
 
-export const HomeSchema = new Schema <Home> ({
+export const HomeSchema = new Schema <IHome> ({
     title: String,
     images: [ImageSchema],
     geometry: {

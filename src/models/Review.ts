@@ -1,15 +1,11 @@
 import { ObjectId } from 'mongodb';
 import { Schema, model } from  'mongoose';
 
-interface Author {
-    type: ObjectId,
-    ref: string
-}
 
 interface Review {
     body: string;
     rating: number;
-    author: Author;
+    author: ObjectId;
 }
 
 const  reviewSchema = new Schema <Review> ({

@@ -1,0 +1,49 @@
+<% layout("layouts/boilerplate") %>
+    <div class="row">
+        <h1 class="text-center">New home</h1>
+        <div class="col-md-6  offset-md-3">
+            <form action="/homes" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="home[title]" required>
+                    <div class="valid-feedback">
+                        Sharp!!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="home[location]" required>
+                    <div class="valid-feedback">
+                        Sharp!!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label custom-file-label">Add Images</label>
+                    <input class="form-control" type="file" id="image" name="image" multiple>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">home Price</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="Price"
+                            aria-describedby="price-label" name="home[price]" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Sharp!!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="home[description]"
+                        required></textarea>
+                        <div class="valid-feedback">
+                            Sharp!!
+                        </div>
+                </div>
+                <button class="btn btn-success">Add home</button>
+            </form>
+
+            
+            <a href="/homes">All homes</a>
+        </div>
+    </div>

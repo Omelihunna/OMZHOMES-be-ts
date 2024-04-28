@@ -1,13 +1,14 @@
 import Home from "../models/homes";
 import Review from "../models/Review";
 import { Request, Response, NextFunction } from "express"
+import { IUser } from "../models/User";
 
 class ReviewController {
     public static async createReview (req: Request, res: Response, next: NextFunction) {
         try {
             const home = await Home.findById(req.params.id);
             const review = new Review(req.body.review);
-            review.author = req.user._id;
+            review.author = (req.user as IUser)._id;
             home?.reviews.push(review);
             // const reviewAuthor = await User.findById(review.author)
             // console.log(reviewAuthor)

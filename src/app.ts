@@ -17,7 +17,10 @@ import userRoutes from './routes/users';
 import ExpressError from './utils/ExpressError';
 import DatabaseService from './Databases/DatabaseService';
 import IUSer from "./models/User"
+import * as dotenv from "dotenv"
+dotenv.config()
 
+const MONGO_URL = process.env.MONGO_URL as string;
 
 interface SessionConfig {
     store: Store;
@@ -48,6 +51,8 @@ class App {
     private initializeMiddlewares(): void {
         this.app.set('view engine', 'ejs');
         this.app.set('views', path.join(__dirname, 'views'));
+        this.app.set("layout", "boilerplate");
+        this.app.set("layout extractScripts", true)
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(methodOverride('_method'));
         this.app.use(express.static(path.join(__dirname, 'public')));
@@ -121,7 +126,7 @@ class App {
     }
 
     private initializeDatabase(): void {
-        const Db = new DatabaseService
+        const Db = new DatabaseService(MONGO_URL)
         Db.connect()
     }
 

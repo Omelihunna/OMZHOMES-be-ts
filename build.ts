@@ -6,6 +6,6 @@ import { execSync } from 'child_process';
 execSync('tsc');
 
 // Copy EJS files to the output directory
-const sourceDir = join(__dirname, 'src', 'templates');
-const destDir = join(__dirname, 'dist', 'templates');
+const sourceDir = join(__dirname, 'src', 'views');
+const destDir = join(__dirname, 'dist/src', 'views');
 fs.copySync(sourceDir, destDir);

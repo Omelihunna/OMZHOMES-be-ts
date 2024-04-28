@@ -1,0 +1,37 @@
+<% layout("layouts/boilerplate") %>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+        <div class="card shadow">
+            <img src="https://t3.ftcdn.net/jpg/06/98/15/46/360_F_698154637_GAXZ679hfMD3990ZiU7hLvTeCQYecp0Q.jpg" alt="" class="card-img-top">
+            
+            <div class="card-body">
+                <h5 class="card-title">Sign Up</h5>
+                <form action="/register" method="POST" class="validated-form" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Enter Username</label>
+                        <input class="form-control" type="text" id="username" name="username" autofocus required>
+                        <div class="valid-feedback">
+                            Sharp!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Enter E-mail</label>
+                        <input class="form-control" type="text" id="email" name="email" required>
+                        <div class="valid-feedback">
+                            Sharp!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Enter Password</label>
+                        <input class="form-control" type="text" id="password" name="password" required>
+                        <div class="valid-feedback">
+                            Sharp!
+                        </div>
+                    </div>
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+                    <button class="btn btn-primary" type="button" onclick='location.href="/login"'>Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

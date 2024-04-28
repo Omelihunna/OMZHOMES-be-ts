@@ -4,6 +4,8 @@ import { IUser } from "../models/User";
 import CloudinaryService from "../cloudinary";
 import mbxGeoCoding from "@mapbox/mapbox-sdk/services/geocoding";
 import { ObjectId } from "mongodb";
+import dotenv from "dotenv";
+dotenv.config()
 const mapBoxToken = process.env.MAPBOX_TOKEN as string;
 const geoCoder = mbxGeoCoding({ accessToken: mapBoxToken });
 

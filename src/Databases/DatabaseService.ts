@@ -1,20 +1,25 @@
 import MongoStore from "connect-mongo";
 import mongoose, { ConnectOptions } from "mongoose";
-const MONGO_URL = "mongodb://localhost:27017/prototype"
+import * as dotenv from "dotenv"
+dotenv.config()
+
+const MONGO_URL = process.env.MONGO_URL as string;
 
 class DatabaseService {
     private mongoose;
     private readonly options: any;
+    private mongoUrl: string
 
-    constructor(options?: any) {
+    constructor(MONGO_URL: string, options?: any) {
         this.options = options;
         this.mongoose = mongoose
+        this.mongoUrl = MONGO_URL
     }
 
     connect() {
         this.mongoose.set('strictQuery', false);
 
-        this.mongoose.connect(MONGO_URL as string, this.options as ConnectOptions)
+        this.mongoose.connect(this.mongoUrl as string, this.options as ConnectOptions)
 
         this.mongoose.connection.once('connecting', () => {
             console.log('connecting to mongodb server via mongoose...')
