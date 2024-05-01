@@ -112,4 +112,4 @@ const center = [-103.5917, 40.6699];
 const zoom = 3;
 const homes = {} // Replace this with your GeoJSON data
 const clusterMap = new ClusterMap(mapToken, containerId, style, center as [number, number], zoom, homes);
-clusterMap.renderMap();
+export default clusterMap.renderMap();

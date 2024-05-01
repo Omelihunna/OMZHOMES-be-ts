@@ -33,4 +33,4 @@ class MapService {
 const mapToken = process.env.MAPBOX_TOKEN as string;
 const mapService = new MapService(mapToken);
 const homeData = '{"title": "Campground Title", "location": "Campground Location", "geometry": {"coordinates": [lng, lat]}}';
-mapService.createMap(homeData);
+export default mapService.createMap(homeData);

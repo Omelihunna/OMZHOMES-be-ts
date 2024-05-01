@@ -1,6 +1,6 @@
 import bsCustomFileInput from "bs-custom-file-input"
 
-(() => {
+export default (() => {
     'use strict'
 
     bsCustomFileInput.init()

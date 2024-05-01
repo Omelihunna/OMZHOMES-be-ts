@@ -31,7 +31,7 @@ interface SessionConfig {
     cookie: {
         httpOnly: boolean;
         // secure?: boolean; // Commented out since it's optional
-        expires: number;
+        expires: Date;
         maxAge: number;
     };
 }
@@ -49,6 +49,7 @@ class App {
     }
 
     private initializeMiddlewares(): void {
+        // this.app.engine("ejs", ejsMate)
         this.app.set('view engine', 'ejs');
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.set("layout", "boilerplate");
@@ -60,7 +61,7 @@ class App {
 
         const weekInMilli = 1000 * 60 * 60 * 24 * 7;
         const store = MongoStore.create({
-            mongoUrl: 'mongodb://localhost:27017/prototype',
+            mongoUrl: MONGO_URL,
             touchAfter: 24 * 60 * 60,
             crypto: {
                 secret: 'thisshouldbeabettersecret!',
@@ -74,30 +75,46 @@ class App {
         const sessionConfig = {
             store,
             name: 'session',
-            secret: 'thisisnotasecret',
-            resave: false,
+            secret: 'thisshouldbeabettersecret!',
+            resave: true,
             saveUninitialized: true,
             cookie: {
                 httpOnly: true,
+                // sameSite: "none",
                 // secure: true, // false in development
                 expires: new Date(Date.now() + weekInMilli),
                 maxAge: weekInMilli,
             },
         };
 
-        this.app.use(session(sessionConfig as SessionOptions));
+        this.app.use(session(sessionConfig));
         this.app.use(flash());
         this.app.use(helmet());
-        this.app.use(passport.initialize());
         this.app.use(passport.session());
+        this.app.use(passport.initialize());
+        
         passport.use(new LocalStrategy(User.authenticate()));
+        // Serialize user
         passport.serializeUser((user: any, done) => {
+            console.log('Serializing user:', user);
             done(null, user?._id);
         });
-        passport.deserializeUser(User.deserializeUser());
+
+    // Deserialize user
+        passport.deserializeUser((id: any, done) => {
+            console.log('Deserializing user with ID:', id);
+            User.findById(id, (err: any, user: any) => {
+                done(err, user);
+            });
+        });
+        
+        // passport.serializeUser((user: any, done) => {
+        //     done(null, user?._id);
+        // });
+        // passport.deserializeUser(User.deserializeUser());
 
         this.app.use((req: Request, res: Response, next: NextFunction) => {
-            res.locals.currentUser = req.user;
+            res.locals.currentUser = req.user as IUser;
             res.locals.success = req.flash('success');
             res.locals.error = req.flash('error');
             next();
@@ -106,7 +123,7 @@ class App {
         const scriptSrcUrls = ['https://stackpath.bootstrapcdn.com/', 'https://api.tiles.mapbox.com/', 'https://api.mapbox.com/', 'https://kit.fontawesome.com/', 'https://cdnjs.cloudflare.com/', 'cdn.jsdelivr.net'];
         const styleSrcUrls = ['https://stackpath.bootstrapcdn.com/', 'https://api.tiles.mapbox.com/', 'https://api.mapbox.com/', 'https://kit-free.fontawesome.com/', 'https://fonts.googleapis.com/', 'https://use.fontawesome.com/', 'http://cdn.jsdelivr.net/'];
         const connectSrcUrls = ['https://api.mapbox.com/', 'https://a.tiles.mapbox.com/', 'https://b.tiles.mapbox.com/', 'https://events.mapbox.com/'];
-        const imgSrcUrls = ["'self'", 'blob:', 'data:', 'https://res.cloudinary.com/', 'https://images.unsplash.com', 'https://t3.ftcdn.net'];
+        const imgSrcUrls = ["'self'", 'blob:', 'data:', 'https://res.cloudinary.com/', 'https://images.unsplash.com', 'https://t3.ftcdn.net', 'https://png.pngtree.com/'];
         const fontSrcUrls: string[] = [];
 
         this.app.use(
@@ -119,7 +136,7 @@ class App {
                     workerSrc: ["'self'", 'blob:'],
                     objectSrc: [],
                     imgSrc: imgSrcUrls,
-                    fontSrc: ["'self'", ...fontSrcUrls],
+                    fontSrc: ["'self'", ...fontSrcUrls]
                 },
             })
         );
@@ -133,7 +150,7 @@ class App {
     private initializeRoutes(): void {
         this.app.use('/homes', homeRoutes);
         this.app.use('/homes/:id/reviews', reviewRoutes);
-        this.app.use('/', userRoutes);
+        this.app.use("/", new userRoutes(passport).router )
         this.app.get('/', (req: Request, res: Response) => {
             res.render('home');
         });
@@ -157,5 +174,6 @@ class App {
     }
 }
 
-const app = new App();
-app.start();
+// const app = new App();
+// app.start();
+export default App;
