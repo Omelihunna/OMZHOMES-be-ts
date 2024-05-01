@@ -28,7 +28,7 @@ class Seed {
             const random1000 = Math.floor(Math.random() * 1000);
             const price = Math.floor(Math.random() * 20) + 10
             const home = new Home({
-                author: "662a4f7a82f99fe9385b07b4",
+                author: "662f590b362be038d2683b47",
                 location: `${cities[random1000].city}, ${cities[random1000].state}`,
                 title: `${this.sample(descriptors)}, ${this.sample(places)}`,
                 description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad doloribus nisi similique, doloremque nobis voluptatum delectus dicta. Soluta eaque, repellat quibusdam dolores vitae, culpa consectetur, magnam modi dolorem aut nulla!",

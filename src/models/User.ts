@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose"
 
 export interface IUser {

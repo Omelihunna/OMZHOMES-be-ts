@@ -94,24 +94,24 @@ class App {
         this.app.use(passport.initialize());
         
         passport.use(new LocalStrategy(User.authenticate()));
+
         // Serialize user
-        passport.serializeUser((user: any, done) => {
-            console.log('Serializing user:', user);
-            done(null, user?._id);
-        });
+        // passport.serializeUser((user: any, done) => {
+        //     console.log('Serializing user:', user);
+        //     done(null, user.id);
+        // });
+
+        passport.serializeUser((User as any).serializeUser());
 
     // Deserialize user
-        passport.deserializeUser((id: any, done) => {
-            console.log('Deserializing user with ID:', id);
-            User.findById(id, (err: any, user: any) => {
-                done(err, user);
-            });
-        });
-        
-        // passport.serializeUser((user: any, done) => {
-        //     done(null, user?._id);
+        // passport.deserializeUser((id: any, done) => {
+        //     console.log('Deserializing user with ID:', id);
+        //     User.findById(id, (err: any, user: any) => {
+        //         done(err, user);
+        //     });
         // });
-        // passport.deserializeUser(User.deserializeUser());
+
+        passport.deserializeUser(User.deserializeUser());
 
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.locals.currentUser = req.user as IUser;
