@@ -1,6 +1,6 @@
 import mapboxgl from 'mapbox-gl';
-import dotenv from "dotenv";
-dotenv.config()
+// import dotenv from "dotenv";
+// dotenv.config()
 
 class ClusterMap {
   private readonly mapToken: string;
@@ -17,7 +17,6 @@ class ClusterMap {
     this.center = center;
     this.zoom = zoom;
     this.homes = homes;
-
     mapboxgl.accessToken = this.mapToken;
   }
 
@@ -91,6 +90,7 @@ class ClusterMap {
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
           coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
+      
         new mapboxgl.Popup().setLngLat(coordinates).setHTML(popUpMarkup).addTo(map);
       });
 
@@ -105,11 +105,12 @@ class ClusterMap {
 }
 
 // Usage:
-const mapToken = process.env.MAPBOX_TOKEN as string;
+// const mapToken = process.env.MAPBOX_TOKEN as string;
 const containerId = 'cluster-map';
 const style = 'mapbox://styles/mapbox/dark-v11';
 const center = [-103.5917, 40.6699];
 const zoom = 3;
-const homes = {} // Replace this with your GeoJSON data
+// const homes = {} // Replace this with your GeoJSON data
+//@ts-ignore
 const clusterMap = new ClusterMap(mapToken, containerId, style, center as [number, number], zoom, homes);
 export default clusterMap.renderMap();

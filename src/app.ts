@@ -131,7 +131,7 @@ class App {
                 directives: {
                     defaultSrc: [],
                     connectSrc: ["'self'", ...connectSrcUrls],
-                    scriptSrc: ["'self'", "'unsafe-inline'", ...scriptSrcUrls],
+                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-hashes'",  ...scriptSrcUrls],
                     styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
                     workerSrc: ["'self'", 'blob:'],
                     objectSrc: [],

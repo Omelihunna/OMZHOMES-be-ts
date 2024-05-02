@@ -10,10 +10,10 @@ import { IUser } from './models/User';
 
 class Middleware {
     public isLoggedIn(req: Request, res: Response, next: NextFunction): void {
-        console.log(req.session)
-        console.log(req.user)
-        console.log(res.locals)
-        console.log(req.isAuthenticated())
+        // console.log(req.session)
+        // console.log(req.user)
+        // console.log(res.locals)
+        // console.log(req.isAuthenticated())
         if (!req.isAuthenticated()) {
             req.session.returnTo = req.originalUrl;
             req.flash('error', 'You have to be signed in to do that');

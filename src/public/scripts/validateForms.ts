@@ -1,8 +1,7 @@
 import bsCustomFileInput from "bs-custom-file-input"
 
-export default (() => {
-    'use strict'
-
+const h = () => {
+    // 'use strict'
     bsCustomFileInput.init()
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('.needs-validation')
@@ -19,4 +18,5 @@ export default (() => {
             form.classList.add('was-validated')
         }, false)
     })
-})()
+}
+export default h();

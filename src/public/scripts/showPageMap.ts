@@ -33,4 +33,4 @@ class MapService {
 // Example usage:
 const mapService = new MapService(mapToken);
  // @ts-ignore
-export default mapService.createMap(home);
+mapService.createMap(home);
