@@ -55,7 +55,7 @@ interface ReviewSchema {
 
 // Define the campground schema
 export const HomeSchema = Joi.object({
-    campground: Joi.object({
+    home: Joi.object({
         title: Joi.string().required(),
         price: Joi.number().required().min(0),
         images: Joi.array(),

@@ -1,11 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
-import ejs from 'ejs';
 import methodOverride from 'method-override';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
-import session, { Store, SessionOptions } from 'express-session';
+import session, { Store } from 'express-session';
 import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 import passport from 'passport';
@@ -16,8 +15,8 @@ import reviewRoutes from './routes/reviews';
 import userRoutes from './routes/users';
 import ExpressError from './utils/ExpressError';
 import DatabaseService from './Databases/DatabaseService';
-import IUSer from "./models/User"
 import * as dotenv from "dotenv"
+import bodyParser = require('body-parser');
 dotenv.config()
 
 const MONGO_URL = process.env.MONGO_URL as string;
@@ -54,7 +53,9 @@ class App {
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.set("layout", "boilerplate");
         this.app.set("layout extractScripts", true)
+        this.app.use(bodyParser.json());
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(bodyParser.urlencoded({extended: true}))
         this.app.use(methodOverride('_method'));
         this.app.use(express.static(path.join(__dirname, 'public')));
         this.app.use(mongoSanitize());
@@ -94,23 +95,7 @@ class App {
         this.app.use(passport.initialize());
         
         passport.use(new LocalStrategy(User.authenticate()));
-
-        // Serialize user
-        // passport.serializeUser((user: any, done) => {
-        //     console.log('Serializing user:', user);
-        //     done(null, user.id);
-        // });
-
         passport.serializeUser((User as any).serializeUser());
-
-    // Deserialize user
-        // passport.deserializeUser((id: any, done) => {
-        //     console.log('Deserializing user with ID:', id);
-        //     User.findById(id, (err: any, user: any) => {
-        //         done(err, user);
-        //     });
-        // });
-
         passport.deserializeUser(User.deserializeUser());
 
         this.app.use((req: Request, res: Response, next: NextFunction) => {
@@ -174,6 +159,4 @@ class App {
     }
 }
 
-// const app = new App();
-// app.start();
 export default App;

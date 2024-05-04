@@ -24,7 +24,7 @@ class Seed {
 
     public async seedDB(): Promise <void> {
         await Home.deleteMany({});
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 50; i++) {
             const random1000 = Math.floor(Math.random() * 1000);
             const price = Math.floor(Math.random() * 20) + 10
             const home = new Home({
@@ -58,5 +58,7 @@ class Seed {
 
 const seed = new Seed
 seed.initializeDatabase()
-seed.seedDB()
+seed.seedDB().then(() => {
+    seed.disconnectDB()
+})
 

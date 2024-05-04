@@ -7,11 +7,6 @@ interface Image {
     filename: string;
 }
 
-// interface Author {
-//     type: ObjectId,
-//     ref: string
-// }
-
 interface Review {
     body: string;
     rating: number;
@@ -24,6 +19,7 @@ interface Geometry {
 }
 
 export interface IHome {
+    _id: ObjectId;
     title: string;
     images: Image[];
     geometry: Geometry;
@@ -44,6 +40,7 @@ export const ImageSchema = new Schema <Image> (
 );
 
 export const HomeSchema = new Schema <IHome> ({
+    // _id: Schema.Types.ObjectId,
     title: String,
     images: [ImageSchema],
     geometry: {
