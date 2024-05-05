@@ -69,7 +69,7 @@
                                 <% home.images.forEach(function (img, i) { %>
                                     <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
                                     <div class="form-check-inline">
-                                        <input type="checkbox" name="dleteImages[]" value="<%= img.filename %>"
+                                        <input type="checkbox" name="deleteImages[]" value="<%= img.filename %>"
                                             id="img-<%= i %>">
                                     </div>
                                     <label for="img-<%= i %>">Delete</label>

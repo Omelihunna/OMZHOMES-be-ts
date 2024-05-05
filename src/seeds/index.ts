@@ -42,7 +42,7 @@ class Seed {
                 },
                 images: [
                     {
-                        url: 'https://res.cloudinary.com/dghmtarj6/image/upload/v1711734326/YelpCampm/q4uyvdgpbk1czljwhpjq.jpg',
+                        url: "https://res.cloudinary.com/dghmtarj6/image/upload/v1714835546/u4asy3tqzjeqmtokmyf0.jpg",
                         filename: 'YelpCampm/q4uyvdgpbk1czljwhpjq'
                     }
                 ]
