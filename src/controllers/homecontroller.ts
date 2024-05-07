@@ -56,29 +56,6 @@ class HomeController {
         res.render("homes/new");
     }
 
-    // public static async showHome(
-    //     req: Request,
-    //     res: Response,
-    //     next: NextFunction
-    // ): Promise<void> {
-    //     try {
-    //         const home = await Home.findById(req.params.id)
-    //             .populate("reviews")
-    //             .populate({
-    //                 path: "reviews",
-    //                 populate: { path: "author", model: "User" },
-    //             })
-    //             .populate("author");
-    //         if (!home) {
-    //             req.flash("error", "Cannot find any home with ths ID");
-    //             return res.redirect("/homes");
-    //         }
-    //         console.log(home)
-    //         res.render("homes/show", { home });
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // }
 
     public static async showHome(
         req: Request,

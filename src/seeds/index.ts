@@ -31,7 +31,7 @@ class Seed {
                 author: "662f590b362be038d2683b47",
                 location: `${cities[random1000].city}, ${cities[random1000].state}`,
                 title: `${this.sample(descriptors)}, ${this.sample(places)}`,
-                description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad doloribus nisi similique, doloremque nobis voluptatum delectus dicta. Soluta eaque, repellat quibusdam dolores vitae, culpa consectetur, magnam modi dolorem aut nulla!",
+                description: "Lorem ipsum",
                 price,
                 geometry: {
                     type: "Point",
