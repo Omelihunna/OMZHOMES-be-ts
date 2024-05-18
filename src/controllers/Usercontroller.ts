@@ -28,7 +28,6 @@ class UserController {
 
     public static loginUser(req: Request, res: Response): void {
         const redirectUrl = (res.locals.returnTo as string) || '/homes';
-        console.log(redirectUrl)
         req.flash("success", "Welcome Back");
         res.redirect(redirectUrl);
     }
