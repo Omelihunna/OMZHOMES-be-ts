@@ -9,10 +9,16 @@ export interface IUser {
     hash: string;
 }
 
-const UserSchema = new Schema <IUser> ({
+export interface IFederatedCredential extends Document {
+    userId: ObjectId;
+    provider: string;
+    subject: string;
+}
+
+const UserSchema = new Schema<IUser>({
     email: {
         type: String,
-        required: true, 
+        required: true,
         unique: true
     },
     username: {
@@ -26,6 +32,14 @@ const UserSchema = new Schema <IUser> ({
     }
 })
 
-UserSchema.plugin(passportLocalMongoose);
+const federatedCredentialSchema = new Schema<IFederatedCredential>({
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    provider: { type: String, required: true },
+    subject: { type: String, required: true },
+});
 
-export default model("User", UserSchema)
+UserSchema.plugin(passportLocalMongoose);
+const User = model("User", UserSchema)
+const FederatedCredential = model<IFederatedCredential>("FederalCredential", federatedCredentialSchema)
+
+export { User, FederatedCredential };

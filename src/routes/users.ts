@@ -1,4 +1,5 @@
 import passport, { PassportStatic } from "passport";
+// import {GoogleStrategy} from "passport-google-oidc"
 import express, { Router } from "express";
 import UserController from "../controllers/Usercontroller";
 import middleware from "../middleware";
@@ -22,6 +23,15 @@ class UserRouter {
         this.router.route("/login")
             .get(UserController.renderLoginForm)
             .post(middleware.storeReturnTo, this.passport.authenticate("local", { failureFlash: true, failureRedirect: "/login" }), UserController.loginUser);
+
+        this.router.route("/login/federated/google")
+            .get(passport.authenticate("google"))
+
+        this.router.route("/oauth2/redirect/google")
+            .get(passport.authenticate("google", {
+                successRedirect: "/",
+                failureRedirect: "/login"
+            }))
 
         this.router.get("/logout", UserController.logoutUser);
     }

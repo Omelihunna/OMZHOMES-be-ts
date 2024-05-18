@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/User';
+import { User } from '../models/User';
 
 class UserController {
     public static renderRegisterUserForm(req: Request, res: Response): void {

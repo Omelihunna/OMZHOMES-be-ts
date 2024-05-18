@@ -9,17 +9,20 @@ import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User, { IUser } from './models/User';
+import { User, IUser } from './models/User';
 import homeRoutes from './routes/homes';
 import reviewRoutes from './routes/reviews';
 import userRoutes from './routes/users';
 import ExpressError from './utils/ExpressError';
 import DatabaseService from './Databases/DatabaseService';
+import { GoogleAuthService } from './Services/GoogleAuthService';
+import {Strategy as GoogleStrategy } from "passport-google-oauth20"
 import * as dotenv from "dotenv"
 import bodyParser = require('body-parser');
 dotenv.config()
 
 const MONGO_URL = process.env.MONGO_URL as string;
+
 
 interface SessionConfig {
     store: Store;
@@ -55,7 +58,7 @@ class App {
         this.app.set("layout extractScripts", true)
         this.app.use(bodyParser.json());
         this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(bodyParser.urlencoded({extended: true}))
+        this.app.use(bodyParser.urlencoded({ extended: true }))
         this.app.use(methodOverride('_method'));
         this.app.use(express.static(path.join(__dirname, 'public')));
         this.app.use(mongoSanitize());
@@ -93,8 +96,18 @@ class App {
         this.app.use(helmet());
         this.app.use(passport.session());
         this.app.use(passport.initialize());
-        
+
         passport.use(new LocalStrategy(User.authenticate()));
+
+        passport.use(new GoogleStrategy({
+            clientID: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            callbackURL: process.env.CALLBACK_URL || '/oauth2/redirect/google',
+            scope: ['profile']
+        }, (token, tokenSecret, profile, done) => {
+            GoogleAuthService.verify('google', profile, done);
+        }));
+
         passport.serializeUser((User as any).serializeUser());
         passport.deserializeUser(User.deserializeUser());
 
@@ -116,7 +129,7 @@ class App {
                 directives: {
                     defaultSrc: [],
                     connectSrc: ["'self'", ...connectSrcUrls],
-                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-hashes'",  ...scriptSrcUrls],
+                    scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-hashes'", ...scriptSrcUrls],
                     styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
                     workerSrc: ["'self'", 'blob:'],
                     objectSrc: [],
@@ -135,7 +148,7 @@ class App {
     private initializeRoutes(): void {
         this.app.use('/homes', homeRoutes);
         this.app.use('/homes/:id/reviews', reviewRoutes);
-        this.app.use("/", new userRoutes(passport).router )
+        this.app.use("/", new userRoutes(passport).router)
         this.app.get('/', (req: Request, res: Response) => {
             res.render('home');
         });
