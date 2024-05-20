@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
+import ejs from "ejs";
 import methodOverride from 'method-override';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
@@ -51,7 +52,7 @@ class App {
     }
 
     private initializeMiddlewares(): void {
-        // this.app.engine("ejs", ejsMate)
+        // this.app.engine("ejs", ejsMate as any)
         this.app.set('view engine', 'ejs');
         this.app.set('views', path.join(__dirname, 'views'));
         this.app.set("layout", "boilerplate");
@@ -82,6 +83,7 @@ class App {
             secret: 'thisshouldbeabettersecret!',
             resave: true,
             saveUninitialized: true,
+            returnTo: "",
             cookie: {
                 httpOnly: true,
                 // sameSite: "none",

@@ -15,19 +15,19 @@ class Middleware {
         // console.log(res.locals)
         // console.log(req.isAuthenticated())
         if (!req.isAuthenticated()) {
-            req.session.returnTo = req.originalUrl;
+            res.locals.returnTo = req.originalUrl;
             req.flash('error', 'You have to be signed in to do that');
             return res.redirect('/login');
         }
         next();
     }
 
-    public storeReturnTo(req: Request, res: Response, next: NextFunction): void {
-        if (req.session.returnTo) {
-            res.locals.returnTo = req.session.returnTo;
-        }
-        next();
-    }
+    // public storeReturnTo(req: Request, res: Response, next: NextFunction): void {
+    //     if (req.session.returnTo) {
+    //         res.locals.returnTo = req.session.returnTo;
+    //     }
+    //     next();
+    // }
 
     public async isAuthor(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
